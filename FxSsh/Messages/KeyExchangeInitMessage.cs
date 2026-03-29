@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace FxSsh.Messages
@@ -38,6 +40,8 @@ namespace FxSsh.Messages
         public bool FirstKexPacketFollows { get; set; }
 
         public uint Reserved { get; set; }
+
+        public bool CanSendExtInfo => KeyExchangeAlgorithms.Contains(ExtInfoMessage.ExtendedInfoClient, StringComparer.OrdinalIgnoreCase);
 
         public override byte MessageType { get { return MessageNumber; } }
 

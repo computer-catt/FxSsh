@@ -9,6 +9,7 @@ namespace FxSsh.Messages;
 public class MessageRegistry {
     public static readonly Dictionary<int, Func<Message>> Registry = new() {
         {1, () => new DisconnectMessage()},
+        {7, () => new ExtInfoMessage()},
         {20, () => new KeyExchangeInitMessage()},
         {30, () => new KeyExchangeXInitMessage()},
         {31, () => new KeyExchangeXReplyMessage()},
