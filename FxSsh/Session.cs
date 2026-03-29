@@ -48,6 +48,7 @@ namespace FxSsh
         private EventWaitHandle _hasBlockedMessagesWaitHandle = new ManualResetEvent(true);
 
         public string ServerVersion { get; private set; }
+        public bool NoAuth { get; private set; }
         public string ClientVersion { get; private set; }
         public byte[] SessionId { get; private set; }
         public T GetService<T>() where T : SshService
@@ -80,7 +81,7 @@ namespace FxSsh
             _compressionAlgorithms.Add("none", () => new NoCompression());
         }
 
-        public Session(Socket socket, Dictionary<string, string> hostKey, string serverBanner)
+        public Session(Socket socket, Dictionary<string, string> hostKey, string serverBanner, bool noAuth = false)
         {
             Contract.Requires(socket != null);
             Contract.Requires(hostKey != null);
@@ -88,6 +89,7 @@ namespace FxSsh
             _socket = socket;
             _hostKey = hostKey.ToDictionary(s => s.Key, s => s.Value);
             ServerVersion = serverBanner;
+            NoAuth = noAuth;
         }
 
         public event EventHandler<EventArgs> Disconnected;
